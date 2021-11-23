@@ -23,12 +23,12 @@ SMTP_LOGIN = read_config_value(config, "smtp", "login")
 SMTP_PASSWORD = read_config_value(config, "smtp", "password")
 SQL_LITE_DB_PATH = read_config_value(config, "core", "db_path", fallback="covid.db")
 EMAIL_RECIPIENTS = to_list(read_config_value(config, "smtp", "recipients", fallback=""))
-USER_AGENT = read_config_value(config, "core", "user_agent", fallback="github.com/jean-malo/doctolib-vaccine-alert")
+USER_AGENT = read_config_value(config, "core", "user_agent", fallback="github.com/raben2/doctolib-impftermin")
 DOCTOLIB_SEARCH_URL = read_config_value(
     config,
     "core",
     "doctolib_search_url",
-    fallback="https://www.doctolib.fr/vaccination-covid-19/paris-75001?page=1&ref_visit_motive_ids[]=6970&ref_visit_motive_ids[]=7005&force_max_limit=2",
+    fallback="https://www.doctolib.de/impfung-covid-19-corona/hamburg?single_shot_appointment=true&ref_visit_motive_ids[]=9039",
 )
 RATE_LIMIT = read_config_value(
     config,
@@ -46,5 +46,5 @@ BLACKLISTED_PROFILE_IDS = to_list(
     var_type=int,
 )
 
-PLURAL_INTRO = "Voici la liste des rendez-vous disponibles:"
-SINGULAR_INTRO = "Voici le rendez-vous disponible:"
+PLURAL_INTRO = "Here is the list of available appointments:"
+SINGULAR_INTRO = "Here is the available appointment:"

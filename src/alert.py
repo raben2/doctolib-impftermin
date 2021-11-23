@@ -11,7 +11,7 @@ import logging
 from . import settings
 
 logger = logging.getLogger(__name__)
-locale.setlocale(locale.LC_TIME, "fr_FR")
+locale.setlocale(locale.LC_TIME, "de_DE")
 
 new_line = "\n"
 
@@ -50,7 +50,7 @@ def get_slack_message(vaccines):
                             "type": "button",
                             "text": {
                                 "type": "plain_text",
-                                "text": "Prendre un rendez vous",
+                                "text": "Make an appointment",
                                 "emoji": True,
                             },
                             "value": "click_me_123",
@@ -70,7 +70,7 @@ def send_slack_alert(vaccines):
             url=settings.SLACK_WEBHOOK,
             json=dict(
                 blocks=get_slack_message(vaccines),
-                text=":alert: Des rendez-vous pour se faire vacciner sont disponibles :alert:",
+                text=":alert: Vaccination appointment available :alert:",
             ),
         )
     except Exception as e:
@@ -150,10 +150,10 @@ def get_html_mail(vaccines, plural=True):
         "<ul>\n"
         + "\n".join(
             [
-                "<li>".rjust(8) + f"<b>Centre: </b><br>{vaccine['name']}<br>"
+                "<li>".rjust(8) + f"<b>Address: </b><br>{vaccine['name']}<br>"
                 f"<b>Date{'s' if len(vaccine['starts']) > 1 else ''}: </b><br><ul>{' '.join(format_date(vaccine['starts'], language='HTML'))}</ul>"
                 f"<b>Adresse: </b> {vaccine['address']}"
-                f"<br><b><a href=\"{vaccine['url']}\">Lien pour reserver</a></b><br>"
+                f"<br><b><a href=\"{vaccine['url']}\">Reserve</a></b><br>"
                 + "</li>"
                 for vaccine in vaccines
             ]
@@ -223,9 +223,9 @@ def send_mail_alert(vaccines):
             )
         )
         msg["Subject"] = (
-            f"🚨 Des rendez-vous pour se faire vacciner sont disponibles 🚨 "
+            f"🚨 Vaccination appointments are available 🚨 "
             if len(vaccines) > 1
-            else f"🚨 Un rendez-vous pour se faire vacciner est disponible 🚨 "
+            else f"🚨 An appointment to get vaccinated is available 🚨 "
         )
         msg.attach(msg_text)
         msg.attach(msg_html)

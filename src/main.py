@@ -68,7 +68,7 @@ async def main():
         await page.set_extra_http_headers(
             {
                 "User-Agent": settings.USER_AGENT,
-                "Accept-Language": "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7,la;q=0.6",
+                "Accept-Language": "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7,la;q=0.6",
             }
         )
         await page.goto(
@@ -97,7 +97,7 @@ def export_raw_results(results):
 
 
 async def parse_response(response: Response, parsed_results, raw_results):
-    if "https://www.doctolib.fr/search_results" in response.url:
+    if "https://www.doctolib.de/search_results" in response.url:
         data = await response.json()
         center_name = data.get("search_result", {}).get("last_name")
         if data.get("total", 0) > 0:
@@ -117,13 +117,13 @@ async def parse_response(response: Response, parsed_results, raw_results):
                     ):
                         logger.info(
                             f"🚨 Appointment(s) found for center {center_name}"
-                            f'link to book: https://www.doctolib.fr/{data["search_result"]["url"]}'
+                            f'link to book: https://www.doctolib.de/{data["search_result"]["url"]}'
                         )
                         send_alert(
                             [
                                 {
                                     "name": center_name,
-                                    "url": f'https://www.doctolib.fr{data["search_result"]["url"]}',
+                                    "url": f'https://www.doctolib.de{data["search_result"]["url"]}',
                                     "starts": availabilities,
                                     "profile_id": data["search_result"]["profile_id"],
                                     "address": f'{data["search_result"]["address"]}, {data["search_result"]["zipcode"]}, {data["search_result"]["city"]}',
